@@ -3,6 +3,7 @@ import { MessagesModule } from "./messages/messages.module";
 import {SequelizeModule} from "@nestjs/sequelize";
 import {UsersModule} from "./users/users.module";
 import {ConfigModule} from "@nestjs/config";
+import {User} from "./users/users.model";
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import {ConfigModule} from "@nestjs/config";
           username: process.env.DATABASE_USER,
           password: process.env.DATABASE_PASSWORD,
           database: process.env.DATABASE_DB,
-          models: [],
+          models: [User],
           autoLoadModels: true,
       })
   ],
