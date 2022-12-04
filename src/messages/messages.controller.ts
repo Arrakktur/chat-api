@@ -1,32 +1,56 @@
-import {Body, Controller, Delete, Get, Param, Post, Put} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Redirect} from '@nestjs/common';
 import {SendMessageDto} from "./dto/send-message.dto";
 import {UpdateMessageDto} from "./dto/update-message.dto";
+import {MessagesService} from "./messages.service";
 
 @Controller('messages')
 export class MessagesController {
 
+    constructor(private readonly messagesService: MessagesService){}
+
+    /**
+     * Получение всех сообщений
+     */
     @Get()
     getAll(): string{
-        return 'getAll';
+        return this.messagesService.getAll();
     }
 
+    /**
+     * Получение сообщения по id
+     * @param {number} id id сообщения
+     */
     @Get(':id')
     getById(@Param('id') id: number): string{
-        return 'getOne ' + id;
+        return this.messagesService.getById(id);
     }
 
+    /**
+     * Отправка сообщения
+     * @param {SendMessageDto} sendMessageDto параметры отправенного сообщеняи
+     */
     @Post()
+    @HttpCode(HttpStatus.CREATED)
     sendMessage(@Body() sendMessageDto: SendMessageDto): string{
-        return 'send Message ' + sendMessageDto.text + sendMessageDto.date;
+        return this.messagesService.sendMessage(sendMessageDto);
     }
 
+    /**
+     * Удаление сообщения
+     * @param {number} id id сообщения
+     */
     @Delete(':id')
     removeMessage(@Param('id') id: number): string{
-        return 'delete ' + id;
+        return this.messagesService.removeMessage(id);
     }
 
+    /**
+     * Редактирование сообщения
+     * @param {UpdateMessageDto} updateMessageDto Параметры нового сообщения
+     * @param {number} id id сообщения
+     */
     @Put(':id')
     updateMessage(@Body() updateMessageDto: UpdateMessageDto, @Param('id') id: number): string{
-        return 'update ' + id;
+        return this.messagesService.updateMessage(updateMessageDto, id);
     }
 }
