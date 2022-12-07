@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {InjectModel} from "@nestjs/sequelize";
-import {User} from "./users.model";
-import {CreateUserDto} from "./dto/create-user.dto";
+import {User} from "../models/users.model";
+import {CreateUserDto} from "../dto/create-user.dto";
 
 @Injectable()
 export class UsersService {
@@ -14,7 +14,6 @@ export class UsersService {
     }
 
     async getAllUsers() {
-        console.log('test');
         const users = await this.userRepository.findAll();
         return users;
     }

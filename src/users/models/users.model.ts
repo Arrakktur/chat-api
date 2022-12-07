@@ -17,4 +17,6 @@ export class User extends Model<User, UserCreationAttrs> {
     login: string;
     @Column({type: DataType.STRING, allowNull: false})
     password: string;
+    @Column({type: DataType.STRING})
+    token: string;
 }
