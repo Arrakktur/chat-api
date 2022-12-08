@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
-import { AuthService } from "./auth.service";
+import { AuthService } from "../services/auth.service";
 import { SequelizeModule } from "@nestjs/sequelize";
-import { User } from "../users/models/users.model";
+import { User } from "../models/users.model";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 
 @Module({

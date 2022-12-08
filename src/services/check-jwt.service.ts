@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { CheckJwtDto } from "../dto/check-jwt.dto";
-import { AuthService } from "../../auth/auth.service";
+import { AuthService } from "./auth.service";
 
 @Injectable()
 export class CheckJwtService{
