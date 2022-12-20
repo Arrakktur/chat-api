@@ -26,7 +26,8 @@ export class AuthService {
   }
 
   /**
-   * Првоерка на суцществование пользователя по логину
+   * Проверка на существование пользователя по логину
+   * todo добавить проверку не на существование пользователя а на возможность создать пользователя
    * @param {LoginUserDto} dto Логин пользователя
    */
   async validateUserLogin(dto: LoginUserDto): Promise<boolean> {

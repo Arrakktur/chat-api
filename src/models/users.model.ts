@@ -4,6 +4,7 @@ interface UserCreationAttrs {
   login: string;
   password: string;
   name: string;
+  lastEnter: string;
 }
 
 @Table({ tableName: "users" })
@@ -12,7 +13,7 @@ export class User extends Model<User, UserCreationAttrs> {
   id: number;
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   name: string;
-  @Column({ type: DataType.STRING })
+  @Column({ type: DataType.STRING, allowNull: true })
   lastEnter: string;
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   login: string;
