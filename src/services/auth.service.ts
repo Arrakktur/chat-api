@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
 import { SignInDto } from "../dto/sign-in.dto";
 import { InjectModel } from "@nestjs/sequelize";
 import { User } from "../models/users.model";
@@ -10,22 +10,27 @@ import { SignUpDto } from "../dto/sign-up.dto";
 @Injectable()
 export class AuthService {
 
-  constructor(@InjectModel(User) private userRepository: typeof User, private jwtService: JwtService){}
+  constructor(@InjectModel(User) private userRepository: typeof User, private jwtService: JwtService) {
+  }
 
   /**
    * Регистрация пользователя
    * @param {SignUpDto} dto Параметры пользователя
    */
-  async signUp(dto: SignUpDto): Promise<boolean>{
-    return false;
+  async signUp(dto: SignUpDto): Promise<User | false> {
+    const isValid = !await this.validateUserLogin(dto);
+    if (!isValid) {
+      return false;
+    }
+    return await this.userRepository.create(dto);
   }
 
   /**
    * Првоерка на суцществование пользователя по логину
    * @param {LoginUserDto} dto Логин пользователя
    */
-  async validateUserLogin(dto: LoginUserDto): Promise<boolean>{
-    const isValid = await this.userRepository.findOne({where: {login: dto.login}});
+  async validateUserLogin(dto: LoginUserDto): Promise<boolean> {
+    const isValid = await this.userRepository.findOne({ where: { login: dto.login } });
     return Boolean(isValid);
   }
 
@@ -34,7 +39,7 @@ export class AuthService {
    * @param {SignInDto} dto Параметры пользователя
    */
   async validateUser(dto: SignInDto): Promise<boolean> {
-    const isValid = await this.userRepository.findOne({where: {login: dto.login, password: dto.password}});
+    const isValid = await this.userRepository.findOne({ where: { login: dto.login, password: dto.password } });
     return Boolean(isValid);
   }
 
@@ -43,8 +48,8 @@ export class AuthService {
    * @param {SignInDto} dto Параметры пользователя
    */
   createJWT(dto: SignInDto): string {
-    const jwt = this.jwtService.sign({login: dto.login, password: dto.password}, {privateKey: 'key'});
-    this.userRepository.update({token: jwt},{where: {login: dto.login, password: dto.password}});
+    const jwt = this.jwtService.sign({ login: dto.login, password: dto.password }, { privateKey: "key" });
+    this.userRepository.update({ token: jwt }, { where: { login: dto.login, password: dto.password } });
     return jwt;
   }
 
@@ -53,7 +58,7 @@ export class AuthService {
    * @param {CheckJwtDto} dto jwt
    */
   async checkJwt(dto: CheckJwtDto): Promise<boolean> {
-    const isValid = await this.userRepository.findOne({where: {token: dto.jwt}});
+    const isValid = await this.userRepository.findOne({ where: { token: dto.jwt } });
     return Boolean(isValid);
   }
 }

@@ -10,7 +10,11 @@ export class Chat extends Model<Chat, ChatCreationAttrs> {
   @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
   id: number;
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
-  name: string;
+  title: string;
   @Column({ type: DataType.INTEGER, unique: true })
   id_user: string;
+  @Column({ type: DataType.STRING })
+  lastMessage: string;
+  @Column({ type: DataType.STRING })
+  avatar: string;
 }

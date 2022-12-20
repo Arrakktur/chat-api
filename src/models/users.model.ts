@@ -3,6 +3,7 @@ import { Column, DataType, Model, Table } from "sequelize-typescript";
 interface UserCreationAttrs {
   login: string;
   password: string;
+  name: string;
 }
 
 @Table({ tableName: "users" })
@@ -11,12 +12,12 @@ export class User extends Model<User, UserCreationAttrs> {
   id: number;
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   name: string;
-  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  @Column({ type: DataType.STRING })
   lastEnter: string;
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   login: string;
   @Column({ type: DataType.STRING, allowNull: false })
   password: string;
-  @Column({ type: DataType.STRING })
+  @Column({ type: DataType.STRING, unique: true })
   token: string;
 }

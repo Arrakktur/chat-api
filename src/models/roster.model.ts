@@ -9,6 +9,6 @@ interface RosterCreationAttrs {
 export class Roster extends Model<Roster, RosterCreationAttrs> {
   @Column({ type: DataType.INTEGER, unique: true })
   id_chat: number;
-  @Column({ type: DataType.STRING, unique: true })
+  @Column({ type: DataType.INTEGER, unique: true })
   id_user: number;
 }
